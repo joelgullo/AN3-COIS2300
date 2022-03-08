@@ -24,7 +24,7 @@ public static class Utility
             Console.WriteLine(" Page number requested is {0}", thisPage);
         }
         // add the event to the list
-        Globals.ev_list.insert_event(Globals.ARRIVAL, Globals.clock + time, index);
+        Globals.ev_list.insert_event(Globals.ARRIVAL, Globals.clock + time, index, thisPage);
         return;
     }
 
