@@ -21,11 +21,12 @@ public class EVnode
 	    backward = null;
 	}
 
-    public EVnode(int etype, long etime, Cust ptr)
+    public EVnode(int etype, long etime, Cust ptr, int page)
 	{
 	    ev_time = etime;
 	    ev_type = etype;
 	    cust_index = ptr;
+	    pageRequested = page;
 	    forward = null;
 	    backward = null;
 	}
@@ -75,6 +76,8 @@ public class EVnode
 // Class to manipulate the Event List
 public class EVlist
 {
+    int[] pageArray = new int[100]; // keep track of total # of page requests	
+	
     private EVnode top_event;
     private EVnode last_event;
 
@@ -92,7 +95,7 @@ public class EVlist
         bool not_found;
         EVnode loc, pos;
         // create a new event node with the appropriate information
-        loc = new EVnode(etype, etime, ptr);
+        loc = new EVnode(etype, etime, ptr, pageRequest);
         // determine if the list is empty
         if (top_event == null)
         {
@@ -137,6 +140,9 @@ public class EVlist
         loc.Backward = pos.Backward;
         (pos.Backward).Forward = loc;
         pos.Backward = loc;
+	    
+	pageArray[pageRequest]++;   //keeping track of the number of requests for a certain page
+	    
         return;
     }
 
