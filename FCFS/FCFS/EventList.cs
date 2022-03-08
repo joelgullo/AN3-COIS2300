@@ -71,6 +71,11 @@ public class EVnode
     { 
         return cust_index;
     }
+	
+    public long get_evpage()
+    {
+        return pageRequested;
+    }
 }
 
 // Class to manipulate the Event List
