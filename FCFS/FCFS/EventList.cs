@@ -6,6 +6,7 @@ public class EVnode
     private int ev_type;	    	/* event type */
 	private long ev_time;	        /* time for event to occur */
 	private Cust cust_index;	    /* which customer is responsible for this event */
+	private int pageRequested;      // Random page number
 	private EVnode forward;	        /* forward link */
 	private EVnode backward;	    /* backward link */                            
 
@@ -15,6 +16,7 @@ public class EVnode
 	    ev_time = 0;
 	    ev_type = -1;
 	    cust_index = null;
+	    pageRequested = 0;
 	    forward = null;
 	    backward = null;
 	}
@@ -85,7 +87,7 @@ public class EVlist
 
 
     // add an element of type Cust to queue
-    public void insert_event(int etype, long etime, Cust ptr)
+    public void insert_event(int etype, long etime, Cust ptr, int pageRequest)
     {
         bool not_found;
         EVnode loc, pos;
