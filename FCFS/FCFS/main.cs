@@ -15,7 +15,8 @@ public static class MainProgram
     //    5 - frees event node after it has been processed.
     //    6 - prints out the statistics when the simulation is finished.
     //*********************************************************************
-    public static void Main()
+        int[] pageArray = new int[100]; // keep track of total # of page requests
+	public static void Main()
     {
         bool not_done;
         Cust new_index;
@@ -81,6 +82,10 @@ public static class MainProgram
         // set statistics gathering variable
         cur_index = ev_num.get_cust();
         cur_index.setarrive(Globals.clock);
+	    
+        page = cur_index.getPage();
+        pageArray[page]++;
+	    
         // put the customer in the queue
         Globals.fcfs.add_to_queue(cur_index);
         // if server is not busy then start service
@@ -136,6 +141,10 @@ public static class MainProgram
         Globals.busy = false;
         // accumulate response time
         index = ev_num.get_cust();
+	    
+        page = index.getPage();
+        pageArray[page] = 0;
+	    
         temp = Globals.clock - index.getarrive();
         if(Globals.DEBUG)
             Console.WriteLine(" Response time for customer {0} is {1}", index.getnum(), temp);
