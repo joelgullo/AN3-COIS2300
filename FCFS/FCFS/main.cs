@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 public class MainProgram
 {
@@ -15,8 +15,7 @@ public class MainProgram
     //    5 - frees event node after it has been processed.
     //    6 - prints out the statistics when the simulation is finished.
     //*********************************************************************
-        int[] pageArray = new int[100]; // keep track of total # of page requests
-	public void Main()
+    public static void Main()
     {
         bool not_done;
         Cust new_index;
@@ -36,28 +35,33 @@ public class MainProgram
         Utility.Gen_arrival(new_index, arrive_time);
         // main loop to process the event list
         not_done = true;
-        while(not_done)
-	    {
-	        // get next event
-	        eventid = Globals.ev_list.remove_event();
-	        // update clock
-	        Globals.clock = eventid.get_evtime();
-	        // process event type
-	        switch (eventid.get_evtype())
-		        {
-		        case Globals.ARRIVAL    : Arrive(eventid);
-								              break;
-		        case Globals.COMPLETE   : Depart(eventid);
-								              break;
-                case Globals.EOS        : Utility.Process_statistics();
-								            not_done = false;
-								            break;
-		        default                 : Console.WriteLine("***Error - invalid event type\n");
-                                            break;
-		        }
-	      }
+        while (not_done)
+        {
+            // get next event
+            eventid = Globals.ev_list.remove_event();
+            // update clock
+            Globals.clock = eventid.get_evtime();
+            // process event type
+            switch (eventid.get_evtype())
+            {
+                case Globals.ARRIVAL:
+                    Arrive(eventid);
+                    break;
+                case Globals.COMPLETE:
+                    Depart(eventid);
+                    break;
+                case Globals.EOS:
+                    Utility.Process_statistics();
+                    not_done = false;
+                    break;
+                default:
+                    Console.WriteLine("***Error - invalid event type\n");
+                    break;
+            }
+        }
     }
-
+    public static int page = 0;
+    static int[] pageArray = new int[100];                 // keep track of total # of page requests
 
     //*********************************************************************
     // Name: arrive                                                        
@@ -69,7 +73,7 @@ public class MainProgram
     //    3 - puts the customer into the queue.                   
     //    4 - if the server is not busy then calls start_service.          
     //*********************************************************************
-    public void Arrive(EVnode ev_num)
+    public static void Arrive(EVnode ev_num)
     {
         Cust cur_index, new_index;
         long arrive_time;
@@ -82,15 +86,15 @@ public class MainProgram
         // set statistics gathering variable
         cur_index = ev_num.get_cust();
         cur_index.setarrive(Globals.clock);
-	    
+
         page = cur_index.getPage();
         pageArray[page]++;
-	    
+
         // put the customer in the queue
         Globals.fcfs.add_to_queue(cur_index);
         // if server is not busy then start service
-        if(!Globals.busy)
-	        StartService();
+        if (!Globals.busy)
+            StartService();
         return;
     }
 
@@ -104,14 +108,14 @@ public class MainProgram
     //    2 - sets the server to busy.
     //    3 - schedules a departure event.
     //*********************************************************************
-    public void StartService()
+    public static void StartService()
     {
         long servicetime;
-        Cust index;
+        ///Cust index;
         int j = 0;
         int p = 0;
         int largestTotal = 0;
-        int curPage;
+        //int curPage;
         Cust curIndex;
         Cust[] samePage = new Cust[20];
 
@@ -130,7 +134,7 @@ public class MainProgram
         Queue q = new Queue();
         //call method that loops through queue to find all customers requesting the most requested page
         samePage = q.foreachloop(p);
-        
+
 
         servicetime = Utility.Expon(Globals.service_time);
         //For each cust that has the same page, generate a departure event at the current time
@@ -165,7 +169,7 @@ public class MainProgram
     //    3 - remove the customer from the system.
     //    4 - if the queue is not empty, then start service.
     //*********************************************************************
-    public void Depart(EVnode ev_num)
+    public static void Depart(EVnode ev_num)
     {
         Cust index;
         long temp;
@@ -173,18 +177,18 @@ public class MainProgram
         Globals.busy = false;
         // accumulate response time
         index = ev_num.get_cust();
-	    
+
         page = index.getPage();
         pageArray[page] = 0;
-	    
+
         temp = Globals.clock - index.getarrive();
-        if(Globals.DEBUG)
-            Console.WriteLine(" Response time for customer {0} is {1}", index.getnum(), temp);
+        //if (Globals.DEBUG)
+            //Console.WriteLine(" Response time for customer {0} is {1}", index.getnum(), temp);
         Globals.accum_resp_time += temp;
         Globals.num_resp_time++;
         // if queue is non-empty, start service
-        if(!Globals.fcfs.isempty())
-	        StartService();
+        if (!Globals.fcfs.isempty())
+            StartService();
         return;
     }
 }
