@@ -108,14 +108,46 @@ public class MainProgram
     {
         long servicetime;
         Cust index;
+        int j = 0;
+        int p = 0;
+        int largestTotal = 0;
+        int curPage;
+        Cust curIndex;
+        Cust[] samePage = new Cust[20];
+
+        for (int i = 0; i < pageArray.Length; i++)
+        {
+            if (pageArray[i] > largestTotal)
+            {
+                //largest # of requests saved for comparison
+                largestTotal = pageArray[i];
+                //page with largest # of requests saved
+                p = i;
+            }
+        }
+
+        //initiallizing object for non-static member
+        Queue q = new Queue();
+        //call method that loops through queue to find all customers requesting the most requested page
+        samePage = q.foreachloop(p);
+        
+
+        servicetime = Utility.Expon(Globals.service_time);
+        //For each cust that has the same page, generate a departure event at the current time
+        for (int x = 0; x < j; x++)
+        {
+            curIndex = samePage[x];
+            Utility.Gen_departure(curIndex, Globals.clock + servicetime);
+        }
+
         // remove the first customer from the queue
-        index = Globals.fcfs.take_off_queue();
+        // ***index = Globals.fcfs.take_off_queue();
         // set server to busy
         Globals.busy = true;
         // generate a CPU bust time for the next arrival and associate it with customer
-        servicetime = Utility.Expon(Globals.service_time);
+        // ***servicetime = Utility.Expon(Globals.service_time);
         // schedule a departure event based on CPU burst time
-        Utility.Gen_departure(index, servicetime);
+        // ***Utility.Gen_departure(index, servicetime);
         //accumulate busy time to compute utilization
         Globals.busytime += servicetime;
         return;
