@@ -138,7 +138,7 @@ public class MainProgram
 
         servicetime = Utility.Expon(Globals.service_time);
         //For each cust that has the same page, generate a departure event at the current time
-        for (int x = 0; x < j; x++)
+        for (int x = 0; x < samePage.Length; x++)
         {
             curIndex = samePage[x];
             Utility.Gen_departure(curIndex, Globals.clock + servicetime);
