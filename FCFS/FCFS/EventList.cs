@@ -6,7 +6,6 @@ public class EVnode
     private int ev_type;	    	/* event type */
 	private long ev_time;	        /* time for event to occur */
 	private Cust cust_index;	    /* which customer is responsible for this event */
-	private int pageRequested;      // Random page number
 	private EVnode forward;	        /* forward link */
 	private EVnode backward;	    /* backward link */                            
 
@@ -16,17 +15,15 @@ public class EVnode
 	    ev_time = 0;
 	    ev_type = -1;
 	    cust_index = null;
-	    pageRequested = 0;
 	    forward = null;
 	    backward = null;
 	}
 
-    public EVnode(int etype, long etime, Cust ptr, int page)
+    public EVnode(int etype, long etime, Cust ptr)
 	{
 	    ev_time = etime;
 	    ev_type = etype;
 	    cust_index = ptr;
-	    pageRequested = page;
 	    forward = null;
 	    backward = null;
 	}
@@ -71,18 +68,11 @@ public class EVnode
     { 
         return cust_index;
     }
-	
-    public long get_evpage()
-    {
-        return pageRequested;
-    }
 }
 
 // Class to manipulate the Event List
 public class EVlist
-{
-    int[] pageArray = new int[100]; // keep track of total # of page requests	
-	
+{	
     private EVnode top_event;
     private EVnode last_event;
 
@@ -95,12 +85,12 @@ public class EVlist
 
 
     // add an element of type Cust to queue
-    public void insert_event(int etype, long etime, Cust ptr, int pageRequest)
+    public void insert_event(int etype, long etime, Cust ptr)
     {
         bool not_found;
         EVnode loc, pos;
         // create a new event node with the appropriate information
-        loc = new EVnode(etype, etime, ptr, pageRequest);
+        loc = new EVnode(etype, etime, ptr);
         // determine if the list is empty
         if (top_event == null)
         {
@@ -144,10 +134,7 @@ public class EVlist
         loc.Forward = pos;
         loc.Backward = pos.Backward;
         (pos.Backward).Forward = loc;
-        pos.Backward = loc;
-	    
-	pageArray[pageRequest]++;   //keeping track of the number of requests for a certain page
-	    
+        pos.Backward = loc;	    
         return;
     }
 
