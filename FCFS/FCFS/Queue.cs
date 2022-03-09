@@ -125,4 +125,32 @@ public class Queue
 		    ptr = ptr.Next;    
         }
 	}
+	
+    public Cust[] foreachloop(int page)
+        {
+        Qnode ptr;
+        Cust curCust;
+        int curPage;
+        int j = 0;
+        Cust[] samePage = new Cust[30];
+
+        ptr = head;
+        while (ptr != null)
+        {
+            curCust = ptr.getcust();
+            curPage = curCust.getPage();
+
+            if (curPage == page)
+            {
+                samePage[j] = curCust;
+                j++;
+
+                ptr = head;
+                take_off_queue();
+            }
+
+            ptr = ptr.Next;
+        }
+        return samePage;
+    }
 }
