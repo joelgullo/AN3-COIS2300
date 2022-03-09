@@ -1,6 +1,6 @@
 ﻿using System;
 
-public static class MainProgram
+public class MainProgram
 {
     //**********************************************************************
     // Name: Main
@@ -16,7 +16,7 @@ public static class MainProgram
     //    6 - prints out the statistics when the simulation is finished.
     //*********************************************************************
         int[] pageArray = new int[100]; // keep track of total # of page requests
-	public static void Main()
+	public void Main()
     {
         bool not_done;
         Cust new_index;
@@ -69,7 +69,7 @@ public static class MainProgram
     //    3 - puts the customer into the queue.                   
     //    4 - if the server is not busy then calls start_service.          
     //*********************************************************************
-    public static void Arrive(EVnode ev_num)
+    public void Arrive(EVnode ev_num)
     {
         Cust cur_index, new_index;
         long arrive_time;
@@ -104,7 +104,7 @@ public static class MainProgram
     //    2 - sets the server to busy.
     //    3 - schedules a departure event.
     //*********************************************************************
-    public static void StartService()
+    public void StartService()
     {
         long servicetime;
         Cust index;
@@ -133,7 +133,7 @@ public static class MainProgram
     //    3 - remove the customer from the system.
     //    4 - if the queue is not empty, then start service.
     //*********************************************************************
-    public static void Depart(EVnode ev_num)
+    public void Depart(EVnode ev_num)
     {
         Cust index;
         long temp;
