@@ -117,7 +117,7 @@ public class MainProgram
         //int curPage;
         Cust curIndex;
         Cust longestCust;
-        Cust[] samePage = new Cust[20];
+        Cust[] samePage = new Cust[100];
 
         longestCust = Globals.fcfs.firstForEach();
         p = longestCust.getPage();
