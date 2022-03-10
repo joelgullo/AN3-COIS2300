@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 // elements which make up the queue (hold customer data)
 public class Qnode
@@ -124,9 +124,34 @@ public class Queue
 		    Console.WriteLine(" => {0}", ptr.CustPtr.getarrive());
 		    ptr = ptr.Next;    
         }
-	}
-	
-	 public Cust[] foreachloop(int page)
+    }
+
+    public Cust firstForEach()
+    {
+        Qnode ptr;
+        Cust curCust;
+        Cust longestCust = null;
+        long curWait;
+        long largestWait = 0;
+
+        ptr = head;
+        while (ptr != null)
+        {
+            curCust = ptr.getcust();
+            curWait = Globals.clock - curCust.getarrive();
+            if (curWait > largestWait)
+            {
+                //new largest wait is saved for comparison
+                largestWait = curWait;
+                //Cust with largest wait saved
+                longestCust = curCust;
+            }
+            ptr = ptr.Next;
+        }
+        return longestCust;
+    }
+
+    public Cust[] secondForEachLoop(int page)
     {
         Qnode ptr;
         Cust curCust;
@@ -151,6 +176,6 @@ public class Queue
 
             ptr = ptr.Next;
         }
-	return samePage;
+        return samePage;
     }
 }
