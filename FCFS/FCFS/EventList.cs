@@ -6,7 +6,6 @@ public class EVnode
     private int ev_type;            /* event type */
     private long ev_time;           /* time for event to occur */
     private Cust cust_index;        /* which customer is responsible for this event */
-    private int pageRequested;      // Random page number
     private EVnode forward;         /* forward link */
     private EVnode backward;        /* backward link */
 
