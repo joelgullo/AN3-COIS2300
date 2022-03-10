@@ -132,7 +132,7 @@ public class Queue
         Cust curCust;
         int curPage;
         int j = 0;
-        Cust[] samePage = new Cust[30];
+        Cust[] samePage = new Cust[100];
 
         ptr = head;
         while (ptr != null)
