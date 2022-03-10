@@ -14,7 +14,7 @@ public class Cust
     {
         arrive_time = 0;
         cust_num = num;
-        page_num = 0;
+        page_num = pageRequest.Next(1, 101);
         num += 1;
     }
 
