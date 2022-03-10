@@ -18,7 +18,6 @@ public static class Utility
         {
             Console.WriteLine(" Interarrival time for customer is {0}", time);
             Console.WriteLine(" Arrival time for customer is {0}", Globals.clock + time);
-            Console.WriteLine(" Page number requested is {0}", thisPage);
         }
         // add the event to the list
         Globals.ev_list.insert_event(Globals.ARRIVAL, Globals.clock + time, index);
