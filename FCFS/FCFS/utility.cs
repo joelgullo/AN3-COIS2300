@@ -44,7 +44,7 @@ public static class Utility
             Console.WriteLine(" Departure time for customer is {0}", Globals.clock + time);
         }
         // add departure event to the event list
-        Globals.ev_list.insert_event(Globals.COMPLETE, time + Globals.clock);
+        Globals.ev_list.insert_event(Globals.COMPLETE, time + Globals.clock, index);
         return;
     }
 
