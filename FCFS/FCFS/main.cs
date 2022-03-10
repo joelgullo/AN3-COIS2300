@@ -116,7 +116,7 @@ public class MainProgram
         int largestTotal = 0;
         //int curPage;
         Cust curIndex;
-        Cust[] samePage = new Cust[20];
+        Cust[] samePage = new Cust[100];
 
         for (int i = 0; i < pageArray.Length; i++)
         {
