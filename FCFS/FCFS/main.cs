@@ -61,7 +61,7 @@ public class MainProgram
         }
     }
     public static int page = 0;
-    static int[] pageArray = new int[100];                 // keep track of total # of page requests
+    static int[] pageArray = new int[101];                 // keep track of total # of page requests
 
     //*********************************************************************
     // Name: arrive                                                        
@@ -112,7 +112,6 @@ public class MainProgram
     {
         long servicetime;
         ///Cust index;
-        int j = 0;
         int p = 0;
         int largestTotal = 0;
         //int curPage;
@@ -131,9 +130,9 @@ public class MainProgram
         }
 
         //initiallizing object for non-static member
-        Queue q = new Queue();
+        //Queue q = new Queue();
         //call method that loops through queue to find all customers requesting the most requested page
-        samePage = q.foreachloop(p);
+        samePage = Globals.fcfs.foreachloop(p);
 
 
         servicetime = Utility.Expon(Globals.service_time);
@@ -141,7 +140,10 @@ public class MainProgram
         for (int x = 0; x < samePage.Length; x++)
         {
             curIndex = samePage[x];
-            Utility.Gen_departure(curIndex, Globals.clock + servicetime);
+            if (curIndex != null)
+            {
+                Utility.Gen_departure(curIndex, Globals.clock + servicetime);
+            }
         }
 
         // remove the first customer from the queue
@@ -171,17 +173,17 @@ public class MainProgram
     //*********************************************************************
     public static void Depart(EVnode ev_num)
     {
-        Cust index;
+        Cust dep_index;
         long temp;
         // set server to idle
         Globals.busy = false;
         // accumulate response time
-        index = ev_num.get_cust();
+        dep_index = ev_num.get_cust();
 
-        page = index.getPage();
+        page = dep_index.getPage();
         pageArray[page] = 0;
 
-        temp = Globals.clock - index.getarrive();
+        temp = Globals.clock - dep_index.getarrive();
         //if (Globals.DEBUG)
             //Console.WriteLine(" Response time for customer {0} is {1}", index.getnum(), temp);
         Globals.accum_resp_time += temp;
@@ -192,7 +194,3 @@ public class MainProgram
         return;
     }
 }
-
-
-
-    
