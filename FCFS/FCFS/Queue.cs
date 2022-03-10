@@ -132,7 +132,7 @@ public class Queue
         Cust curCust;
         Cust longestCust = null;
         long curWait;
-        long largestWait = 0;
+        long largestWait = -999;
 
         ptr = head;
         while (ptr != null)
