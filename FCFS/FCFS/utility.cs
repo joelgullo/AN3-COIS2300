@@ -14,9 +14,6 @@ public static class Utility
     //*********************************************************************/
     public static void Gen_arrival(Cust index, long time)
     {
-        Random pageRequest = new Random();
-        int thisPage = pageRequest.Next(1, 101);
-
         if (Globals.DEBUG)
         {
             Console.WriteLine(" Interarrival time for customer is {0}", time);
@@ -24,7 +21,7 @@ public static class Utility
             Console.WriteLine(" Page number requested is {0}", thisPage);
         }
         // add the event to the list
-        Globals.ev_list.insert_event(Globals.ARRIVAL, Globals.clock + time, index, thisPage);
+        Globals.ev_list.insert_event(Globals.ARRIVAL, Globals.clock + time, index);
         return;
     }
 
